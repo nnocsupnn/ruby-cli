@@ -4,5 +4,5 @@
  * Register all routes and methods here.
  */
 $routes = [
-    "sample" => "ExampleController@index"
+    "sample" => "ExampleController@index",
 ]; 
