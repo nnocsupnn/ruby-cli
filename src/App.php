@@ -4,6 +4,8 @@ namespace Ruby;
 use Ruby\Kernel\Database;
 use Exception as ShitHereWeGoAgain;
 
+defined('ROOT_PATH') or die('Application could not run on ' . ROOT_PATH);
+
 class App {
     
     private $functions;
@@ -27,6 +29,7 @@ class App {
      */
     public function run($args) 
     {
+        dd(ROOT_PATH);
         include "routes";
         $calls = checkRoute($args, $routes);
         foreach ($calls as $className => $instance) {
