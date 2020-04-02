@@ -36,9 +36,9 @@ $contents = [
             '',
             'class ' . $name_table[0] . ' extends Model {',
             '',
-            '   protected $table = "' . @$name_table[1] . '";',
+            "\tprotected $table = '" . @$name_table[1] . "';",
             '',
-            '   protected $timestamps = false;',
+            "\tprotected $timestamps = false;",
             '}'
         ]
     ],
@@ -53,11 +53,11 @@ $contents = [
             '',
             'class ' . @$name_table[0] . ' {',
             '',
-            '   public function ' . @$name_table[1] . '() {',
+            "\tpublic function " . @$name_table[1] . "() {",
             '',
-            '       dd(__FILE__);',
+            "\t\tdd(__FILE__);",
             '',
-            '   }',
+            "\t}",
             '}'
         ]
     ]
