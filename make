@@ -36,9 +36,9 @@ $contents = [
             '',
             'class ' . $name_table[0] . ' extends Model {',
             '',
-            "\tprotected $table = '" . @$name_table[1] . "';",
+            "\tprotected \$table = '" . @$name_table[1] . "';",
             '',
-            "\tprotected $timestamps = false;",
+            "\tprotected \$timestamps = false;",
             '}'
         ]
     ],
