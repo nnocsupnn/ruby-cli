@@ -1,0 +1,22 @@
+{
+    "name": "ruby/framework",
+    "description": "Ruby Framework",
+    "require": {
+        "illuminate/database": "^7.4",
+        "illuminate/events": "^7.4",
+        "illuminate/support": "^7.4",
+        "symfony/dotenv": "^5.0",
+        "symfony/var-dumper": "^5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ruby\\": "src/",
+            "Ruby\\Kernel\\": "src/Kernel/",
+            "Ruby\\Components\\": "src/Components/",
+            "Ruby\\Components\\Models\\": "src/Components/Models/"
+        },
+        "files": [
+            "src/Kernel/functions.php"
+        ]
+    }
+}
