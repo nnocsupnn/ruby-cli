@@ -14,6 +14,8 @@ function init():void {
     
     $isDebug = getenv('DEBUG');
 
+    date_default_timezone_set(getenv('TIMEZONE'));
+
     if ($isDebug == "true") {
         ini_set('display_errors', '1');
         error_reporting(E_ALL);
@@ -23,7 +25,7 @@ function init():void {
     }
 }
 
-function get($url):array {
+function get($url):?object {
     $ch = curl_init();
     // set url
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -40,22 +42,28 @@ function get($url):array {
     // close curl resource to free up system resources
     curl_close($ch); 
 
-    return [
+    return (object) [
         'response' => $output,
         'curl_response' => $response_data
     ];
 }
 
 
-function cleanCliArgs ($args):array {
+function clean_args($args, $separator = ",", $sticky = "="):array 
+{
     unset($args[0]);
     $opts = [];
     
-    $params = explode(",", $args[1]);
+    $params = explode($separator, $args[1]);
     foreach ($params as $k => $request) {
-        if (strpos($request, '=') === -1) {
+        if (strpos($request, $sticky) === -1) {
             dd('Invalid paramter provided.');
         } else {
+            if (strpos($request, $sticky) <= 0) {
+                dump("Invalid argument.");
+                continue;
+            }
+
             list($k, $v) = explode("=", $request);
             if (!empty($opts[$k])) {
                 array_push($opts[$k], $v);
@@ -69,34 +77,55 @@ function cleanCliArgs ($args):array {
 }
 
 
-function checkRoute ($args, $routes)
+function checkRoute($args, $routes):?object
 {
-    try {
+    try 
+    {
         $base = getenv('BASE_NS');
         $callables = [];
-        foreach ($args as $arg => $methods) {
+        foreach ($args as $arg => $methods) 
+        {
             $requestMethod = current($methods);
-            if ($routes[$arg]) {
+            if (@$routes[$arg]) 
+            {
                 list($controller, $method) = explode("@", $routes[$arg]);
 
                 $class = $base . $controller;
                 $method = $requestMethod;
-                if (class_exists($class)) {
+                if (class_exists($class)) 
+                {
                     $classInstance = new $class;
-                    if (method_exists($classInstance, $method)) {
-                        $callables[$controller]['instance'] = ($classInstance);
+                    if (method_exists($classInstance, $method)) 
+                    {
+                        $callables[$controller]['class'] = ($classInstance);
                         $callables[$controller]['method'] = $method;
-                    } else {
+
+                        $callables[$controller] = (object) $callables[$controller];
+                    }
+                    else
+                    {
                         throw new \Exception("Method $method on Class $class registered not exists");
                     }
-                } else {
+                } 
+                else 
+                {
                     throw new \Exception("Class $base registered not exists");
                 }
             }
         }
-        return $callables;
-    } catch (\Exception $e) {
+
+        return (object) $callables;
+    } 
+    catch (\Exception $e) 
+    {
         dump($e->getMessage());
-        return $callables;
+        return (object) $callables;
     }
+}
+
+function outputLog ($str = "")
+{
+    $tmstamp = date('Y-m-d H:i:s');
+    echo "[$tmstamp] $str" . PHP_EOL;
+    return;
 }

@@ -13,7 +13,8 @@ $newVars = $args;
 unset($newVars[0]);
 $type = $newVars[1];
 $types = ['model', 'controller'];
-if (!in_array($type, $types)) {
+if (!in_array($type, $types)) 
+{
     echo 'valid param: ' . implode(', ', $types) . PHP_EOL;
     echo 'eg: php make model ModelName:table' . PHP_EOL;
     echo 'eg: php make controller ControllerName:method' . PHP_EOL;
@@ -64,18 +65,24 @@ $contents = [
 ];
 
 $os_type = PHP_OS;
-if ($os_type == 'WINNT') {
+if ($os_type == 'WINNT') 
+{
     $cmd = 'type nul > ' . $contents[$type]['path'] . $name_table[0] . '.php';
-} else {
+} 
+else 
+{
     $cmd = 'touch ' . $contents[$type]['path'] . $name_table[0] . '.php';
 }
 
 $fname = $contents[$type]['path'] . $name_table[0] . '.php';
 exec($cmd);
 
-if (file_exists($fname)) {
+if (file_exists($fname)) 
+{
     file_put_contents($fname, implode(PHP_EOL, $contents[$type]['content']), FILE_APPEND);
-} else {
+} 
+else 
+{
     die('File not created.');
 }
 

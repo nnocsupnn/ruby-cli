@@ -27,12 +27,16 @@ class App {
     /**
      * Start application
      */
-    public function run($args) 
+    public function run($args = []) 
     {
         include "routes";
         $calls = checkRoute($args, $routes);
-        foreach ($calls as $className => $instance) {
-            $instance['instance']->{$instance['method']}();
+        foreach ($calls as $className => $container) {
+            outputLog("Running $className:" . $container->method);
+            $container->class->{$container->method}();
+            outputLog("Done.");
         }
+
+        return;
     } 
 }
