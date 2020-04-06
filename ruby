@@ -15,9 +15,7 @@ define('APP_STARTED', time());
  * Initialize all required
  * resource for the app
  */
-$app->environment()
-->database()
-->run(
+$app->environment()->database()->run(
     // Passed all arguments passed on cli.
     clean_args($_SERVER['argv'], ",", "=")
 );

@@ -1,18 +1,17 @@
 <?php
 /**
- * php make model ModelName:infoUser
- * php make controller ControllerName
+ * @author Niño Casupanan
+ * @return void
  */
-
 require_once "vendor/autoload.php";
 init();
 
 $args = $_SERVER['argv'];
-$newVars = $args;
-
-unset($newVars[0]);
-$type = $newVars[1];
+unset($args[0]);
+$type = $args[1];
+$baseNs = getenv('BASE_NS');
 $types = ['model', 'controller'];
+
 if (!in_array($type, $types)) 
 {
     echo 'valid param: ' . implode(', ', $types) . PHP_EOL;
@@ -21,17 +20,15 @@ if (!in_array($type, $types))
     exit;
 }
 
-// if (!@$newVars[2] && $type == 'model') die('Please provide option modelname and table eg. ModelName:table');
-$name_table = explode(':', $newVars[2]);
-
+$name_table = explode(':', $args[2]);
 $contents = [
     'model' => [
         'path' => 'src/Components/Models/',
         'content' => [
             '<?php' . PHP_EOL,
-            'namespace  Ruby\Components\Models;',
+            'namespace ' . $baseNs . '\Models;',
             '',
-            '/* Model */',
+            "// Model  " . $name_table[0],
             '',
             'use Illuminate\Database\Eloquent\Model;' . PHP_EOL,
             '',
@@ -48,7 +45,7 @@ $contents = [
         'content' => [
             '<?php' . PHP_EOL,
             '',
-            'namespace  Ruby\Components;',
+            'namespace ' . ltrim(rtrim($baseNs, "\\"), "\\") . ';',
             '',
             '/* Controller */',
             '',
