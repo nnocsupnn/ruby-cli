@@ -29,14 +29,26 @@ class App {
      */
     public function run($args = []) 
     {
+        /**
+         * @goto routes 
+         * set options and the value is the controller name.
+         */
         include "routes";
-        $calls = checkRoute($args, $routes);
-        foreach ($calls as $className => $container) {
-            outputLog("Running $className:" . $container->method);
-            $container->class->{$container->method}();
+
+        foreach ($routes as $k => $route) 
+        {
+            /**
+             * php ruby --result methodName
+             */
+            $opt = getopt("", ["$k:"]);
+            $class = getenv('BASE_NS') . $route;
+            
+            if (!method_exists($class, $opt[$k])) throw new ShitHereWeGoAgain('Method not exists');
+            outputLog("Running $route:" . $opt[$k]);
+            (new $class)->{$opt[$k]}();
             outputLog("Done.");
         }
 
         return;
-    } 
+    }
 }

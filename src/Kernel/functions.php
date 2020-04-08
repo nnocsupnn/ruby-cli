@@ -25,7 +25,7 @@ function init():void {
     }
 }
 
-function get($url):?object {
+function get($url, $isVerbose = true):?object {
     $ch = curl_init();
     // set url
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -34,6 +34,11 @@ function get($url):?object {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
+    curl_setopt($ch, CURLOPT_VERBOSE, $isVerbose);
+
+    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36');
+
     // $output contains the output string
     $output = curl_exec($ch);
 
