@@ -2,7 +2,8 @@
 
 /**
  * Register all routes and methods here.
+ * optionName => ControllerName
  */
 $routes = [
-    "sample" => "ExampleController",
-]; 
+    "result" => "FiveMinutes"
+];

@@ -35,17 +35,29 @@ class App {
          */
         include "routes";
 
+        $assocOpt = [];
+        $strOpt = "";
         foreach ($routes as $k => $route) 
         {
             /**
-             * php ruby --result methodName
+             * php ruby --routeName methodName
              */
-            $opt = getopt("", ["$k:"]);
+            $strOpt .= substr($k, 0, 1) . ":";
+            array_push($assocOpt, "$k:");
+            $opt = getopt($strOpt, $assocOpt);
+            if (!@$opt[$k]) 
+            {
+                outputLog("Checking...");
+                continue;
+            }
+
             $class = getenv('BASE_NS') . $route;
             
-            if (!method_exists($class, $opt[$k])) throw new ShitHereWeGoAgain('Method not exists');
+            if (!array_key_exists($k, $opt) 
+            || !method_exists($class, $opt[$k])) throw new ShitHereWeGoAgain('Method not exists');
+
             outputLog("Running $route:" . $opt[$k]);
-            (new $class)->{$opt[$k]}();
+            if (method_exists($class, $opt[$k])) (new $class)->{$opt[$k]}();
             outputLog("Done.");
         }
 
