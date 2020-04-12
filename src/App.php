@@ -37,9 +37,9 @@ class App {
 
         $assocOpt = [];
         $strOpt = "";
-
         try {
-            foreach ($routes as $k => $route) {
+            foreach ($routes as $k => $route) 
+            {
                 /**
                  * php ruby --routeName methodName
                  */
@@ -55,17 +55,17 @@ class App {
 
                 $class = getenv('BASE_NS') . $route;
 
-                if (!class_exists($class)) throw new ShitHereWeGoAgain('Class not exists');
+                if (!class_exists($class)) throw new ShitHereWeGoAgain('Method not exists');
                 if (!array_key_exists($k, $opt)) throw new ShitHereWeGoAgain('Method not exists');
 
                 $class = new $class;
+
+                outputLog("Running $route:" . $opt[$k]);
+                $class->{$opt[$k]}();
             }
         } catch (ShitHereWeGoAgain $sht) {
             print($sht->getMessage());
-            exit;
         } finally {
-            outputLog("Running $route:" . $opt[$k]);
-            $class->{$opt[$k]}();
             outputLog("Done.");
         }
 
