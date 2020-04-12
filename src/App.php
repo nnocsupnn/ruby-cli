@@ -55,7 +55,7 @@ class App {
 
                 $class = getenv('BASE_NS') . $route;
 
-                if (!class_exists($class)) throw new ShitHereWeGoAgain('Method not exists');
+                if (!class_exists($class)) throw new ShitHereWeGoAgain('Class not exists');
                 if (!array_key_exists($k, $opt)) throw new ShitHereWeGoAgain('Method not exists');
 
                 $class = new $class;
