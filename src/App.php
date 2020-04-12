@@ -53,11 +53,12 @@ class App {
 
             $class = getenv('BASE_NS') . $route;
             
-            if (!array_key_exists($k, $opt) 
-            || !method_exists($class, $opt[$k])) throw new ShitHereWeGoAgain('Method not exists');
+            if (!array_key_exists($k, $opt)) throw new ShitHereWeGoAgain('Method not exists');
+
+            $class = new $class;
 
             outputLog("Running $route:" . $opt[$k]);
-            if (method_exists($class, $opt[$k])) (new $class)->{$opt[$k]}();
+            $class->{$opt[$k]}();
             outputLog("Done.");
         }
 
