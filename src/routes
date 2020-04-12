@@ -5,5 +5,5 @@
  * optionName => ControllerName
  */
 $routes = [
-    "result" => "ExampleController"
+    "index" => "ExampleController"
 ];

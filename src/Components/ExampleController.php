@@ -4,13 +4,26 @@ namespace Ruby\Components;
 
 class ExampleController
 {
+    public $var;
     public function __call($name, $args)
     {
-        dd($name, $args);
+        dump($name, $args);
     }
 
     public function index()
     {
-        dd([__FUNCTION__]);
+        dump([__FUNCTION__]);
+    }
+
+    public function __set($name, $value)
+    {
+        $this->var = $value;
+    }
+
+    function __sleep()
+    {
+        return [
+            'tests'
+        ];
     }
 }
