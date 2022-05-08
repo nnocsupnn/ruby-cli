@@ -128,7 +128,7 @@ function checkRoute($args, $routes):?object
     }
 }
 
-function outputLog ($str = "")
+function outputLog ($str = ""):void
 {
     $tmstamp = date('Y-m-d H:i:s');
     echo "[$tmstamp] $str" . PHP_EOL;

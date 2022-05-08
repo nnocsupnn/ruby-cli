@@ -12,12 +12,12 @@ class ExampleController
 
     public function index()
     {
-        dump([__FUNCTION__]);
+        dump("Index Controller");
     }
 
     public function __set($name, $value)
     {
-        $this->var = $value;
+        $this->{$name} = $value;
     }
 
     function __sleep()

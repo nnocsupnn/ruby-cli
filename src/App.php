@@ -41,22 +41,23 @@ class App {
             foreach ($routes as $k => $route) 
             {
                 /**
-                 * php ruby --routeName methodName
+                 * php ruby --{routeName} methodName
                  */
                 $strOpt .= substr($k, 0, 1) . ":";
                 array_push($assocOpt, "$k:");
                 
-                $opt = getopt($strOpt, $assocOpt);
+
+                $opt = getopt(null, $assocOpt);
                 if (!@$opt[$k]) 
                 {
-                    outputLog("Checking...");
+                    outputLog("Invalid {$k} Command skipping..");
                     continue;
                 }
 
                 $class = getenv('BASE_NS') . $route;
 
-                if (!class_exists($class)) throw new ShitHereWeGoAgain('Method not exists');
-                if (!array_key_exists($k, $opt)) throw new ShitHereWeGoAgain('Method not exists');
+                if (!class_exists($class)) throw new ShitHereWeGoAgain("Class " . $class . "  not exists");
+                if (!array_key_exists($k, $opt)) throw new ShitHereWeGoAgain("Method " . $k . " not exists");
 
                 $class = new $class;
 
@@ -64,7 +65,7 @@ class App {
                 $class->{$opt[$k]}();
             }
         } catch (ShitHereWeGoAgain $sht) {
-            print($sht->getMessage());
+            outputLog($sht->getMessage());
         } finally {
             outputLog("Done.");
         }

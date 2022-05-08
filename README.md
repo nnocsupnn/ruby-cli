@@ -21,3 +21,10 @@ $routes = [
     "sample" => "ExampleController@index",
     "other" => "SomeController@test"
 ]; 
+```
+Running the commands
+
+```javascript
+php ruby --routeName methodName
+```
+
