@@ -2,11 +2,11 @@
     "name": "ruby/framework",
     "description": "Ruby Framework",
     "require": {
-        "illuminate/database": "^7.4",
-        "illuminate/events": "^7.4",
-        "illuminate/support": "^7.4",
-        "symfony/dotenv": "^5.0",
-        "symfony/var-dumper": "^5.0"
+        "illuminate/database": "^8.4",
+        "illuminate/events": "^8.4",
+        "illuminate/support": "^8.4",
+        "symfony/dotenv": "5.4",
+        "symfony/var-dumper": "5.4"
     },
     "autoload": {
         "psr-4": {
